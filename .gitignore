@@ -42,4 +42,7 @@ venv.bak/
 
 # Logs
 *.log
+
+# Private Files
+calender.md
 HUGGINGFACE_KEYs.json
