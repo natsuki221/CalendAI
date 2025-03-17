@@ -1,25 +1,48 @@
-# CalendAI 專案
+# CalendAI 專案 🚀  
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-此專案結合 **FastAPI**（後端）與 **React**（前端），提供一個行程規劃與排程的系統。使用者可在前端輸入想要進行的活動、需求時間、地點等，後端會透過 Hugging Face API（大型語言模型）來協助生成合理的行程安排，並以 WebSocket 進行即時互動。
-
-## 功能特色
-
-1. **多元排程**：可根據使用者提供的活動，包含開始/結束時間、地點與需求，生成全天時程。
-2. **Hugging Face API 整合**：透過 `HUGGINGFACE_KEYs.json` 中的有效金鑰，連線 Hugging Face 大型語言模型進行行程生成。
-3. **WebSocket 即時互動**：使用者可在前端即時傳遞活動內容，伺服器即時回應完整行程安排。
-4. **前後端獨立運行**：前端使用 React 建置，後端使用 FastAPI 建置，可分別部署與維護。
+CalendAI 是一個結合 **FastAPI**（後端）與 **React**（前端）的行程規劃系統。使用者只需在前端輸入想進行的活動與需求，後端即會透過 Hugging Face API（大型語言模型）產生合宜的行程建議，並藉由 **WebSocket** 實現即時互動。
 
 ---
 
-## 專案結構
+## 📋 目錄
+1. [✨ 功能特色](#-功能特色)  
+2. [📂 專案結構](#-專案結構)  
+3. [🔧 環境需求](#-環境需求)  
+4. [⚙️ 安裝與執行](#-安裝與執行)  
+   - [1. 後端 (FastAPI)](#1-後端-fastapi)  
+   - [2. 前端 (React)](#2-前端-react)  
+5. [🌐 後端 API 說明](#-後端-api-說明)  
+6. [📑 其他檔案說明](#-其他檔案說明)  
+7. [⚠️ 注意事項](#-注意事項)  
+8. [📝 授權條款](#-授權條款)  
+9. [🔮 未來規劃](#-未來規劃)  
 
+---
+
+## ✨ 功能特色
+1. **多元排程**  
+   - 使用者可輸入活動開始／結束時間、地點、需求等，系統自動產生全天行程。  
+
+2. **Hugging Face API 整合**  
+   - 運用 `HUGGINGFACE_KEYs.json` 內的有效金鑰，連線至大型語言模型生成個人化行程。  
+
+3. **WebSocket 即時互動**  
+   - 前端與伺服器雙向傳遞訊息，享受無縫的即時行程更新體驗。  
+
+4. **前後端獨立運行**  
+   - 前端採用 React、後端使用 FastAPI，可分別部署、測試與維護。  
+
+---
+
+## 📂 專案結構
 ```
 natsuki221-calendai_server_side/
 ├── api.py                   # FastAPI 主程式 (後端 API)
 ├── api_test.py              # 測試 API Key 狀態用的腳本
 ├── calender.md              # 範例行程 Markdown
 ├── requirements.txt         # Python 相依套件列表
-├── schedule_assistant_system_prompt.txt  # 後端行程助理使用的 System Prompt
+├── schedule_assistant_system_prompt.txt  # 後端行程助理的 System Prompt
 └── frontend/
     ├── audit-report.json    # 依賴套件安全性檢測報告
     └── calendai/
@@ -27,7 +50,7 @@ natsuki221-calendai_server_side/
         ├── package.json     # 前端 NPM 相依套件資訊
         ├── package-lock.json
         ├── public/          # 前端靜態檔案
-        └── src/             # React App 原始碼
+        └── src/             # React 原始碼 (主要程式邏輯)
             ├── App.js
             ├── SchedulePlanner.js
             └── ... (其他 React 組件)
@@ -35,29 +58,25 @@ natsuki221-calendai_server_side/
 
 ---
 
-## 環境需求
-
-- Python 3.8+  
-- Node.js 14+（建議 16 或更高）
-- 可用的 Hugging Face API Key（儲存在 `HUGGINGFACE_KEYs.json`，並將 status 設為 `"valid"`）
+## 🔧 環境需求
+- **Python** 3.8+  
+- **Node.js** 14+（建議 16 或更新版本）  
+- 可用的 **Hugging Face API Key**（存放於 `HUGGINGFACE_KEYs.json`，並將 `"status"` 設為 `"valid"`）
 
 ---
 
-## 安裝與執行
+## ⚙️ 安裝與執行
 
 ### 1. 後端 (FastAPI)
 
-1. **安裝套件**
-
+1. **安裝套件**  
    ```bash
    cd natsuki221-calendai_server_side
    pip install -r requirements.txt
    ```
-   
-2. **設置 Hugging Face API 金鑰**
 
-   - 在 `HUGGINGFACE_KEYs.json` 新增或維護可用金鑰，並將 `"status"` 設為 `"valid"`。
-   - 例如：
+2. **設定 Hugging Face API 金鑰**  
+   - 在 `HUGGINGFACE_KEYs.json` 中，新增或維護可用金鑰，並將 `"status"` 設為 `"valid"`：
      ```json
      [
        {
@@ -67,51 +86,46 @@ natsuki221-calendai_server_side/
      ]
      ```
 
-3. **啟動後端伺服器**
-
+3. **啟動後端伺服器**  
    ```bash
    uvicorn api:app --host 0.0.0.0 --port 8000 --reload
    ```
-   
-   預設情況下，你可以在瀏覽器開啟 `http://localhost:8000/docs` 檢視自動生成的 API 文件。
+   - 在瀏覽器開啟 [http://localhost:8000/docs](http://localhost:8000/docs) 以查看自動生成的 API 文件。
 
 ### 2. 前端 (React)
 
-1. **安裝相依套件**
-
+1. **安裝相依套件**  
    ```bash
    cd frontend/calendai
    npm install
    ```
 
-2. **本地開發運行**
-
+2. **本地開發運行**  
    ```bash
    npm start
    ```
-   - 伺服器預設使用連接埠 3000（可在瀏覽器中開啟 `http://localhost:3000` 查看）。
-   - 修改程式碼時，頁面會自動重新載入。
+   - 預設服務埠為 [http://localhost:3000](http://localhost:3000)  
+   - 編輯程式碼時，頁面會自動重新載入。
 
-3. **打包部署**
-
+3. **打包部署**  
    ```bash
    npm run build
    ```
-   - 產出檔案預設會放在 `build/` 資料夾，可上傳至任意靜態網站伺服器或整合至後端。
+   - 產生的檔案放置於 `build/`，可直接使用靜態伺服器或整合後端進行部署。
 
 ---
 
-## 後端 API 說明
+## 🌐 後端 API 說明
 
 1. **POST /schedule/**  
-   - **說明**：接收使用者活動資訊，並呼叫 Hugging Face API 生成行程安排。  
-   - **參數格式**（JSON）：
+   - **說明**：接收使用者活動資訊，並透過 Hugging Face API 生成行程安排。  
+   - **參數格式 (JSON)**：
      ```json
      {
        "activities": "想要進行的活動描述"
      }
      ```
-   - **成功回應**（JSON）：
+   - **成功回應 (JSON)**：
      ```json
      {
        "schedule": "生成的行程文字"
@@ -119,41 +133,35 @@ natsuki221-calendai_server_side/
      ```
 
 2. **WebSocket /ws**  
-   - **說明**：透過 WebSocket 實現即時互動的行程生成。  
+   - **說明**：讓客戶端能即時傳送活動描述並獲得行程回饋。  
    - **用法**：
-     - 客戶端與 `/ws` 建立連線後，傳入文字訊息即可獲得行程回應。
-     - 若連線超時，伺服器會定時回傳 `"PING"`，客戶端須回傳 `"PONG"` 以保持連線。
+     - 與 `/ws` 建立 WebSocket 連線後，即可傳送訊息並接收行程。  
+     - 伺服器會定時發送 `"PING"`，請客戶端回傳 `"PONG"` 以保持連線。  
 
 ---
 
-## 其他檔案說明
-
+## 📑 其他檔案說明
 - **`api_test.py`**  
-  提供測試所有 `HUGGINGFACE_KEYs.json` 內金鑰可用性的功能，並自動更新每支金鑰的狀態（`valid`, `invalid`, `quota_exceeded`, `rate_limited` 等）。
-
+  測試所有 `HUGGINGFACE_KEYs.json` 內金鑰可用性，並自動更新金鑰狀態（`valid`, `invalid`, `quota_exceeded`, `rate_limited` 等）。  
 - **`calender.md`**  
-  展示範例的行程安排 Markdown 檔。可參考其格式了解行程生成的最終呈現方式。
-
+  範例行程的 Markdown 文件，可參考其排版與呈現方式。  
 - **`audit-report.json`**  
-  前端使用 `npm audit` 進行安全性檢測的報告檔案。
+  前端使用 `npm audit` 產生的安全性檢測報告。  
 
 ---
 
-## 注意事項
-
-- 若有多組 Hugging Face API Key，程式會隨機選擇 **status** 為 `"valid"` 的一支來執行行程生成。若無可用金鑰，將拋出錯誤。
-- WebSocket 在前端可能需要自行撰寫相對應的邏輯（`PING`/`PONG`）以維持連線穩定。
-
----
-
-## 授權條款
-
-本專案程式碼採用 **MIT License** 。
+## ⚠️ 注意事項
+- 如有多組 Hugging Face API Key，系統會隨機選擇 status 為 `"valid"` 的金鑰進行行程生成。若無可用金鑰，將拋出錯誤。  
+- WebSocket 模式下，前端需自行維護 `PING`/`PONG` 邏輯以防連線中斷。  
 
 ---
 
-## 未來規劃
+## 📝 授權條款
+本專案程式碼採用 **MIT License**。
 
-- 增加使用者認證（如 OAuth）以便個人化行程保存與查詢。
-- 提供更多行程優化選項（如：移動距離最短、優先重要事項、支援多時區等）。
-- 開放更多模型選擇（如 GPT、Llama 等）以增強行程建議的多樣化。
+---
+
+## 🔮 未來規劃
+- **使用者認證**：如 OAuth，以便個人化行程保存與查詢。  
+- **更多行程優化策略**：提供移動距離最短、優先重要事項、或支援多時區等自訂參數。  
+- **支援更多模型**：如 GPT、Llama 等，以增強行程建議的多樣化。  
