@@ -146,9 +146,7 @@ natsuki221-calendai_server_side/
 
 ## 📑 其他檔案說明
 - **`api_test.py`**  
-  測試所有 `HUGGINGFACE_KEYs.json` 內金鑰可用性，並自動更新金鑰狀態（`valid`, `invalid`, `quota_exceeded`, `rate_limited` 等）。  
-- **`calender.md`**  
-  範例行程的 Markdown 文件，可參考其排版與呈現方式。  
+  測試所有 `HUGGINGFACE_KEYs.json` 內金鑰可用性，並自動更新金鑰狀態（`valid`, `invalid`, `quota_exceeded`, `rate_limited` 等）。   
 - **`audit-report.json`**  
   前端使用 `npm audit` 產生的安全性檢測報告。  
 
